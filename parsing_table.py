@@ -10,30 +10,33 @@ import pandas as pd
 class ParsingTable():
 
     @property
-    def columns_types(self)-> dict[str, Type]:
+    def columns_types(self) -> dict[str, Type]:
         return {
-                'device_id': str,
-                'iaq': np.int64,
-                'electrosmog_lf': np.int64,
-                'wifi_level': np.int64,
-                'wifi_n': np.int64,
-                'temperature': np.int64,
-                'humidity': np.int64,
-                'air_pressure': np.int64,
-                'ambient_light': np.int64,
-                'tvoc': np.int64,
-                'co2e': np.int64,
-                'pm10': np.int64,
-                'pm25': np.int64,
-                'electrosmog_hf': np.int64,
-                'sound': np.int64,
-                'battery': str,
-                'main_power': str,
-                'air': np.int64,
-                'comfort': np.int64,
-                'electrosmog': np.int64,
-                'from_unixtime(ts)': dt.date
-            }
+            'device_id': str,
+            'iaq': np.int64,
+            'electrosmog_lf': np.int64,
+            'wifi_level': np.int64,
+            'wifi_n': np.int64,
+            'temperature': np.int64,
+            'humidity': np.int64,
+            'air_pressure': np.int64,
+            'ambient_light': np.int64,
+            'tvoc': np.int64,
+            'co2':np.int64,
+            'co2e': np.int64,
+            'pm10': np.int64,
+            'pm25': np.int64,
+            'electrosmog_hf': np.int64,
+            'sound': np.int64,
+            'battery': str,
+            'main_power': str,
+            'air': np.int64,
+            'comfort': np.int64,
+            'electrosmog': np.int64,
+            'from_unixtime(ts)': dt.date,
+            'rom_unixtime(ts)':dt.date
+
+        }
 
     @staticmethod
     def convert(dtype: Type, vals: pd.Series) -> pd.Series:
@@ -64,7 +67,7 @@ class ParsingTable():
         if not isinstance(val, str):
             return np.nan
 
-        date_format = '%Y-%m-%d %H:%M:%S'
+        date_format = '%Y-%m-%d %H:%M'
 
         return dt.datetime.strptime(val, date_format)
 
@@ -78,11 +81,10 @@ class ParsingTable():
     def _read_file(self, path: Path) -> pd.DataFrame:
 
         df = pd.read_csv(str(path),
-                         parse_dates=False,
+                         # parse_dates=False,
                          encoding='latin1',
 
                          )
-
 
         return self.cast(df)
 
@@ -94,8 +96,8 @@ class ParsingTable():
 
 
 if __name__ == '__main__':
-    path = './resources/clean_file/CAP133_1.csv'
-    print(ParsingTable().columns_types['device_id'])
-    raw_df= pd.read_csv(path)
+    path = './resources/clean_file/CAP153_1.csv'
+    # print(ParsingTable().columns_types['device_id'])
+    raw_df = pd.read_csv(path)
     df = ParsingTable().parse(path)
     print('end')
