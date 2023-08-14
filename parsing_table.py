@@ -22,7 +22,7 @@ class ParsingTable():
             'air_pressure': np.int64,
             'ambient_light': np.int64,
             'tvoc': np.int64,
-            'co2':np.int64,
+            'co2': np.int64,
             'co2e': np.int64,
             'pm10': np.int64,
             'pm25': np.int64,
@@ -34,7 +34,7 @@ class ParsingTable():
             'comfort': np.int64,
             'electrosmog': np.int64,
             'from_unixtime(ts)': dt.date,
-            'rom_unixtime(ts)':dt.date
+            'rom_unixtime(ts)': dt.date
 
         }
 
@@ -67,9 +67,18 @@ class ParsingTable():
         if not isinstance(val, str):
             return np.nan
 
-        date_format = '%Y-%m-%d %H:%M'
+        # date_format_1 = '%Y-%m-%d %H:%M:%S'
+        regex_format_1 = re.compile('^\d{4}-\d{1,2}-\d{1,2}\s\d{2}:\d{2}:\d{2}$')
+        # date_format_2 = '%d-%m-%Y %H:%M'
+        regex_format_2 = re.compile('^\d{1,2}-\d{1,2}-\d{4}\s\d{2}:\d{2}$')
 
-        return dt.datetime.strptime(val, date_format)
+        regex_match_1 = regex_format_1.findall(val)
+        regex_match_2 = regex_format_2.findall(val)
+
+        if regex_match_1:
+            return dt.datetime.strptime(val, '%Y-%m-%d %H:%M:%S')
+        if regex_match_2:
+            return dt.datetime.strptime(val, '%d-%m-%Y %H:%M')
 
     def cast(self, df: pd.DataFrame) -> pd.DataFrame:
         res = df
