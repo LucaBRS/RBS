@@ -105,7 +105,7 @@ class ParsingTable():
 
 
 if __name__ == '__main__':
-    path = './resources/clean_file/CAP153_1.csv'
+    path = '../resources/clean_file/CAP153_1.csv'
     # print(ParsingTable().columns_types['device_id'])
     raw_df = pd.read_csv(path)
     df = ParsingTable().parse(path)
