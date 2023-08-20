@@ -53,7 +53,7 @@ class ParsingTable():
                     res = pd.to_numeric(res, errors='coerce')
                     # res = res.astype(dtype)
                 else:
-                    res.loc[res.notna()] = pd.to_numeric(res.loc[res.notna()], errors='coerce')
+                    res.loc[res.notna()] = pd.to_numeric(res.loc[res.notna()], errors='coerce').round(3)
 
             return res
 
