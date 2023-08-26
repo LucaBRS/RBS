@@ -4,7 +4,7 @@ import numpy as np
 import numpy.testing
 import pandas as pd
 
-from aqi_calculation import AqiCalculation
+from utils.aqi_calculation import AqiCalculation
 
 
 class TestAqiCalculation(unittest.TestCase):

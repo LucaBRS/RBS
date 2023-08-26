@@ -1,8 +1,9 @@
 import datetime as dt
+import re
 from pathlib import Path
 from typing import Union, Type, Optional, Iterable
 import numpy as np
-import re
+
 
 import pandas as pd
 
@@ -71,14 +72,45 @@ class ParsingTable():
         regex_format_1 = re.compile('^\d{4}-\d{1,2}-\d{1,2}\s\d{2}:\d{2}:\d{2}$')
         # date_format_2 = '%d-%m-%Y %H:%M'
         regex_format_2 = re.compile('^\d{1,2}-\d{1,2}-\d{4}\s\d{2}:\d{2}$')
+        # date_format_3 = '%d/%m/%Y'
+        regex_format_3 = re.compile('^\d{1,2}/\d{1,2}/\d{4}')
 
         regex_match_1 = regex_format_1.findall(val)
         regex_match_2 = regex_format_2.findall(val)
+        regex_match_3 = regex_format_3.findall(val)
 
         if regex_match_1:
             return dt.datetime.strptime(val, '%Y-%m-%d %H:%M:%S')
         if regex_match_2:
             return dt.datetime.strptime(val, '%d-%m-%Y %H:%M')
+        if regex_match_3:
+            return dt.datetime.strptime(val, '%d/%m/%Y')
+
+
+    def date_converter_ext(self,val):
+
+        if not isinstance(val, str):
+            return np.nan
+
+        # date_format_1 = '%Y-%m-%d %H:%M:%S'
+        regex_format_1 = re.compile('^\d{4}-\d{1,2}-\d{1,2}\s\d{2}:\d{2}:\d{2}$')
+        # date_format_2 = '%d-%m-%Y %H:%M'
+        regex_format_2 = re.compile('^\d{1,2}-\d{1,2}-\d{4}\s\d{2}:\d{2}$')
+        # date_format_3 = '%d/%m/%Y'
+        regex_format_3 = re.compile('^\d{1,2}/\d{1,2}/\d{4}')
+
+        regex_match_1 = regex_format_1.findall(val)
+        regex_match_2 = regex_format_2.findall(val)
+        regex_match_3 = regex_format_3.findall(val)
+
+        if regex_match_1:
+            return dt.datetime.strptime(val, '%Y-%m-%d %H:%M:%S')
+        if regex_match_2:
+            return dt.datetime.strptime(val, '%d-%m-%Y %H:%M')
+        if regex_match_3:
+            return dt.datetime.strptime(val, '%d/%m/%Y')
+
+
 
     def cast(self, df: pd.DataFrame) -> pd.DataFrame:
         res = df
@@ -105,7 +137,7 @@ class ParsingTable():
 
 
 if __name__ == '__main__':
-    path = '../resources/clean_file/CAP153_1.csv'
+    path = '../../resources/clean_file/CAP153_1.csv'
     # print(ParsingTable().columns_types['device_id'])
     raw_df = pd.read_csv(path)
     df = ParsingTable().parse(path)

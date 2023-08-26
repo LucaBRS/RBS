@@ -37,7 +37,7 @@ class AqiCalculation:
 
 
 if __name__ == '__main__':
-    path = '../resources/aqi_breakpoints.xlsx'
+    path = '../../resources/aqi_breakpoints.xlsx'
     aqi = AqiCalculation(dict_df=pd.read_excel(path, sheet_name=['electrosmog_lf', 'wifi_level',
                                                                  'temperature', 'humidity', 'air_pressure',
                                                                  'ambient_light', 'tvoc',
