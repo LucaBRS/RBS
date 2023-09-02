@@ -7,7 +7,7 @@ def clean_dataset(dataset):
 
     for i in dataset:
         dataset[i] = dataset[i][ dataset[i]['electrosmog'].astype(str).__contains__('-') == False ]
-        i.to_csv('./clean_file/'+str(i))
+        i.to_csv('./semi_clean_file/'+str(i))
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':

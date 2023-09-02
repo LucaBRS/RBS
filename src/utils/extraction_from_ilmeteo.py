@@ -49,9 +49,9 @@ if __name__ == '__main__':
                     # Save the content to a local CSV file
                     csv_month_test = pd.read_csv(io.BytesIO(csv_content), sep=";")
                     csv_month_test = csv_month_test.drop(columns=['TMIN °C', 'TMAX °C',
-                                                                  'PUNTORUGIADA °C', 'VISIBILITA km', 'VENTOMEDIA km/h',
+                                                                  'PUNTORUGIADA °C', 'VISIBILITA km',
                                                                   'VENTOMAX km/h', 'RAFFICA km/h',
-                                                                  'PIOGGIA mm', 'FENOMENI'])
+                                                                  'PIOGGIA mm'])
 
 
                     df_concat = pd.concat([df_concat, csv_month_test], axis=0)
